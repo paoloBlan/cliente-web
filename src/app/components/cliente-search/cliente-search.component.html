@@ -1,1 +1,18 @@
-<p>cliente-search works!</p>
+
+    <div class="row">
+        <label for="">Buscar por nombres y apellidos: </label>
+        <div class="col-sm-12">
+            <input class="form-control" 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (keyup)="buscar()" 
+            placeholder="Buscar cliente" />
+        </div>
+    </div>
+    <div>
+        <div>
+            <p class="text-danger">{{error}}</p>
+        </div>
+    </div>    
+
+

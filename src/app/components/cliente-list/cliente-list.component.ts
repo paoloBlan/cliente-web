@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ClienteFormComponent } from '../cliente-form/cliente-form.component';
 import { ClienteSearchComponent } from '../cliente-search/cliente-search.component';
 
 @Component({
