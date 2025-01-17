@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
       // validar searchTerm que solo acepte letras
       if(!this.searchTerm.match(/^[a-zA-Z ]*$/)) {
         this.error = 'Solo se aceptan letras';
-        
         return;
       }
 
@@ -25,6 +24,7 @@ import { FormsModule } from '@angular/forms';
         this.error = 'El término de búsqueda no puede ser más de 6 caracteres';
         return;
       }
+      
       this.error = '';
       console.log(`Buscando por: ${this.searchTerm}`);
     }
