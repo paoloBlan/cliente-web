@@ -1,19 +1,28 @@
-
-    <div class="row">
-        <label for="">Buscar por nombres y apellidos: </label>
-        <div class="col-sm-12">
-            <input class="form-control" 
-            type="text" 
-            [(ngModel)]="searchTerm" 
-            (keyup)="buscar()"
-           
-            placeholder="Buscar cliente" />
-        </div>
+<div class="row">
+    <label for="">
+        <h5>
+            Buscar por nombres y apellidos:
+        </h5>
+    </label>
+    <div class="col-sm-6 d-flex ">
+        <input class="form-control me-2" type="text" [(ngModel)]="searchTerm" (keyup)="buscar($event)"
+            [class.is-invalid]="errors.length > 0" placeholder="Buscar cliente" />
+        <button (click)="holaMundo()" id="searchButton" [disabled]="hasError" class="btn btn-secondary">
+            <i class="fas fa-search"></i> Buscar
+        </button>
     </div>
+    <div class="col-sm-6 text-end">
+        <button [routerLink]="['/cliente-form']" class="btn btn-primary d-flex flex-column align-items-center">
+            <i class="fa fa-plus mb-2"></i>
+            <span>Agregar</span>
+            
+        </button>
+    </div>
+</div>
+<div>
     <div>
-        <div>
-            <p class="text-danger">{{error}}</p>
-        </div>
-    </div>    
-
-
+        <ul *ngIf="errors.length > 0" class="text-danger mt-2">
+            <li *ngFor="let error of errors">{{ error }}</li>
+        </ul>
+    </div>
+</div>

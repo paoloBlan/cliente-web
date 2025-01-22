@@ -1,4 +1,52 @@
-<p>cliente-form works
-    klñññññññññññññññññññññññññ
-    fgggggggggggggg
-    f!</p>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 p-4"
+        style="max-width: 500px; width: 100%; border-radius: 15px; background: #f7f9fc;">
+        <h2 class="text-center mb-4 text-primary fw-bold">
+            <i class="fas fa-user-plus me-2"></i>Formulario de Registro
+        </h2>
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label fw-semibold">Nombre</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control form-control-lg" id="nombre" formControlName="nombre"
+                    placeholder="Ingresa tu nombre" required>
+            </div>
+            <div>
+                <ul *ngIf="errors.length > 0" class="text-danger mt-2">
+                    <li *ngFor="let error of errors">{{ errorNombre }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label fw-semibold">Apellido</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                <input type="text" class="form-control form-control-lg" id="apellido" formControlName="apellido"
+                    placeholder="Ingresa tu apellido" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                <input type="tel" class="form-control form-control-lg" id="telefono" formControlName="telefono"
+                    placeholder="Ingresa tu número de teléfono" required>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1 btn-lg shadow-sm">
+                <i class="fas fa-save me-2"></i>Guardar
+               </button>
+            <button type="reset" class="btn btn-light border flex-grow-1 btn-lg shadow-sm">
+                <i class="fas fa-times-circle me-2"></i>Cancelar
+            </button>
+        </div>
+        <div class="mt-4 text-center">
+            <a [routerLink]="['/']" class="btn btn-outline-secondary btn-lg shadow-sm">
+                <i class="fas fa-arrow-left me-2"></i>Volver a la Página Principal
+            </a>
+        </div>
+
+    </div>
+</div>
