@@ -8,7 +8,7 @@ import { RouterModule  } from '@angular/router';
   imports: [
     FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './cliente-search.component.html',
   styleUrl: './cliente-search.component.css'

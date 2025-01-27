@@ -4,8 +4,7 @@ import { ClienteSearchComponent } from '../cliente-search/cliente-search.compone
 @Component({
   selector: 'app-cliente-list',
   imports: [
-    ClienteSearchComponent,
-  
+    ClienteSearchComponent
   ],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.css'

@@ -9,12 +9,12 @@
             <label for="nombre" class="form-label fw-semibold">Nombre</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" class="form-control form-control-lg" id="nombre" formControlName="nombre"
-                    placeholder="Ingresa tu nombre" required>
+                <input [(ngModel)]="nombre"  (keyup)="validarNombre($event)" type="text" class="form-control form-control-lg"
+                [class.is-invalid]="errorsNombre.length > 0"  placeholder="Ingresa tu nombre" required>
             </div>
             <div>
-                <ul *ngIf="errors.length > 0" class="text-danger mt-2">
-                    <li *ngFor="let error of errors">{{ errorNombre }}</li>
+                <ul *ngIf="errorsNombre.length > 0" class="text-danger mt-2">
+                    <li *ngFor="let error of errorsNombre">{{ error }}</li>
                 </ul>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <label for="apellido" class="form-label fw-semibold">Apellido</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                <input type="text" class="form-control form-control-lg" id="apellido" formControlName="apellido"
+                <input type="text" class="form-control form-control-lg" id="apellido" [(ngModel)]="apellido"
                     placeholder="Ingresa tu apellido" required>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <label for="telefono" class="form-label fw-semibold">Teléfono</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
-                <input type="tel" class="form-control form-control-lg" id="telefono" formControlName="telefono"
+                <input type="tel" class="form-control form-control-lg" id="telefono" [(ngModel)]="telefono"
                     placeholder="Ingresa tu número de teléfono" required>
             </div>
         </div>
