@@ -5,9 +5,9 @@
         </h5>
     </label>
     <div class="col-sm-6 d-flex ">
-        <input class="form-control me-2" type="text" [(ngModel)]="searchTerm" (keyup)="buscar($event)"
-            [class.is-invalid]="errors.length > 0" placeholder="Buscar cliente" />
-        <button (click)="holaMundo()" id="searchButton" [disabled]="hasError" class="btn btn-secondary">
+        <input class="form-control me-2" type="text" [(ngModel)]="searchTerm" (keyup)="onKeyBuscar($event)"
+            [class.is-invalid]="errorsSearchTerm.length > 0" placeholder="Buscar cliente" />
+        <button (click)="onBuscar()" id="searchButton" [disabled]="hasError" class="btn btn-secondary">
             <i class="fas fa-search"></i> Buscar
         </button>
     </div>
@@ -21,8 +21,8 @@
 </div>
 <div>
     <div>
-        <ul *ngIf="errors.length > 0" class="text-danger mt-2">
-            <li *ngFor="let error of errors">{{ error }}</li>
+        <ul *ngIf="errorsSearchTerm.length > 0" class="text-danger mt-2">
+            <li *ngFor="let error of errorsSearchTerm">{{ error }}</li>
         </ul>
     </div>
 </div>

@@ -21,55 +21,48 @@ import { RouterModule  } from '@angular/router';
     static readonly PATRON_SOLO_LETRAS = /^[a-zA-Z ]*$/;
 
     searchTerm: string = '';
-    errors: string[] = [];
+    errorsSearchTerm: string[] = [];
     hasError: boolean = true; 
 
    
 
-    buscar(event: KeyboardEvent): void {
-      this.errors = this.validar(this.searchTerm);
-  
-      if (this.errors.length > 0) {
-        return;
-      }
-
-      if (event.key === 'Enter') {
-        this.holaMundo();
-      }
-  
+    onKeyBuscar(event: KeyboardEvent): void {
+      this.errorsSearchTerm = this.validarSearchTerm(this.searchTerm);
+      if (this.errorsSearchTerm.length > 0) return
+      if (event.key === 'Enter')  this.onBuscar()
     }
 
-    private validar(term: string): string[] {
+    private validarSearchTerm(term: string): string[] {
       const errores: string[] = [];
       this.hasError = false;
-      this.validarSoloLetras(term, errores);
-      this.validarLongitud(term, errores);
-      this.validarVacio(term, errores);
+      this.isSoloLetras(term, errores);
+      this.isLongitud(term, errores);
+      this.isVacio(term, errores);
       return errores;
     }
     
-    private validarSoloLetras(term: string, errores: string[]): void {
+    private isSoloLetras(term: string, errores: string[]): void {
       if (!ClienteSearchComponent.PATRON_SOLO_LETRAS.test(term)) {
         errores.push(ClienteSearchComponent.ERROR_SOLO_LETRAS);
         this.hasError = true;
       }
     }
   
-    private validarLongitud(term: string, errores: string[]): void {
+    private isLongitud(term: string, errores: string[]): void {
       if (term.length > 6) {
         errores.push(ClienteSearchComponent.ERROR_LONGITUD);
         this.hasError = true;
       }
     }
   
-    private validarVacio(term: string, errores: string[]): void {
+    private isVacio(term: string, errores: string[]): void {
       if (term.trim() === '') {
         errores.push(ClienteSearchComponent.ERROR_VACIO);
         this.hasError = true;
       }
     }
 
-    holaMundo() : void {
+    onBuscar() : void {
       alert("hola mundo")
     }
   } 

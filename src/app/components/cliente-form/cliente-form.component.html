@@ -4,13 +4,13 @@
         <h2 class="text-center mb-4 text-primary fw-bold">
             <i class="fas fa-user-plus me-2"></i>Formulario de Registro
         </h2>
-
+        <div *ngIf="errorGeneral">{{ errorGeneral }}</div>
         <div class="mb-3">
             <label for="nombre" class="form-label fw-semibold">Nombre</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input [(ngModel)]="nombre"  (keyup)="validarNombre($event)" type="text" class="form-control form-control-lg"
-                [class.is-invalid]="errorsNombre.length > 0"  placeholder="Ingresa tu nombre" required>
+                <input [(ngModel)]="cliente.nombre"  (keyup)="validarNombre($event)" type="text" class="form-control form-control-lg"
+                [class.is-invalid]="errorsNombre.length > 0"  placeholder="Ingresa tu nombre">
             </div>
             <div>
                 <ul *ngIf="errorsNombre.length > 0" class="text-danger mt-2">
@@ -22,23 +22,33 @@
             <label for="apellido" class="form-label fw-semibold">Apellido</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                <input type="text" class="form-control form-control-lg" id="apellido" [(ngModel)]="apellido"
-                    placeholder="Ingresa tu apellido" required>
+                <input [(ngModel)]="cliente.apellido" (keyup)="validarApellido($event)" type="text" class="form-control form-control-lg" 
+                [class.is-invalid]="errorsApellido.length > 0" placeholder="Ingresa tu apellido">
+            </div>
+            <div>
+                <ul *ngIf="errorsApellido.length > 0" class="text-danger mt-2">
+                    <li *ngFor="let error of errorsApellido">{{ error }}</li>
+                </ul>
             </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3">  
             <label for="telefono" class="form-label fw-semibold">Teléfono</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
-                <input type="tel" class="form-control form-control-lg" id="telefono" [(ngModel)]="telefono"
-                    placeholder="Ingresa tu número de teléfono" required>
+                <input  [(ngModel)]="cliente.telefono" (keyup)="validarTelefono($event)" type="text" class="form-control form-control-lg"
+                [class.is-invalid]="errorsTelefono.length > 0" placeholder="Ingresa tu número de teléfono">
+            </div>
+            <div>
+                <ul *ngIf="errorsTelefono.length >0" class="text-danger mt-2">
+                    <li *ngFor="let error of errorsTelefono">{{ error }}</li>
+                </ul>
             </div>
         </div>
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary flex-grow-1 btn-lg shadow-sm">
+            <button type="button" (click)="guardarCliente()" class="btn btn-primary flex-grow-1 btn-lg shadow-sm" [disabled]="hasError">
                 <i class="fas fa-save me-2"></i>Guardar
                </button>
-            <button type="reset" class="btn btn-light border flex-grow-1 btn-lg shadow-sm">
+            <button (click)="reset()" class="btn btn-light border flex-grow-1 btn-lg shadow-sm">
                 <i class="fas fa-times-circle me-2"></i>Cancelar
             </button>
         </div>
