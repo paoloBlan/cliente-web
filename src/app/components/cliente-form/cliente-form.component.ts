@@ -6,6 +6,7 @@ import { ClienteService } from '../../service/cliente.service';
 import { Cliente } from '../../model/cliente';
 import { HttpErrorResponse } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-cliente-form',
   standalone: true,
@@ -18,13 +19,17 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./cliente-form.component.css'] // Corregido a "styleUrls"
 })
 export class ClienteFormComponent {
+
   static readonly PATRON_SOLO_LETRAS = /^[a-zA-Z ]*$/;
   static readonly PATRON_TELEFONO = /^\+?(\d{1,3})?\s?\d{7,15}$/;
+  static readonly PATRON_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   cliente: Cliente = new Cliente();
   errorsNombre: string[] = [];
   errorsApellido: string[] = [];
   errorsTelefono: string[] = [];
-  errorGeneral:string = "";
+  errorsEmail: string[] = [];
+  errorGeneral: string[] = [];
   hasError: boolean = true;
 
   constructor(private clienteService: ClienteService) {}
@@ -32,7 +37,6 @@ export class ClienteFormComponent {
   formatoNombreOrApellido(campo: string, errores: string[], etiqueta: string, maxLength: number): void {
     errores.length = 0; // Resetea los errores
     this.hasError = false;
-
     this.isformatoLetras(campo, errores, etiqueta);
     this.isLongitud(campo, errores, maxLength, etiqueta);
     this.isVacio(campo, errores, etiqueta);
@@ -41,12 +45,20 @@ export class ClienteFormComponent {
   formatoTelefono(campo: string, errores:string[], etiqueta:string, maxLength : number): void {
     errores.length = 0;
     this.hasError = false;
-
     this.isVacio(campo, errores, etiqueta)
     this.isLongitud(campo, errores, maxLength, etiqueta);
     this.isformatoTelefono(campo, errores, etiqueta);
-
   }
+
+
+  formatoEmail(campo: string, errores:string[], etiqueta:string, maxLength : number): void {
+    errores.length = 0;
+    this.hasError = false;
+    this.isVacio(campo, errores, etiqueta)
+    this.isLongitud(campo, errores, maxLength, etiqueta);
+    this.isformatoEmail(campo, errores, etiqueta);
+  }
+  
 
   validarNombre(event: KeyboardEvent): void {
     this.formatoNombreOrApellido(this.cliente.nombre, this.errorsNombre, 'nombre', 45);
@@ -60,6 +72,9 @@ export class ClienteFormComponent {
     this.formatoTelefono(this.cliente.telefono, this.errorsTelefono, 'telefono', 15);
   }
 
+  validarEmail(event: KeyboardEvent): void {
+    this.formatoTelefono(this.cliente.email, this.errorsEmail, 'email', 45);
+  }
   guardarCliente(): void {
     this.formatoNombreOrApellido(this.cliente.nombre, this.errorsNombre, 'nombre', 45);
     this.formatoNombreOrApellido(this.cliente.apellido, this.errorsApellido, 'apellido', 45);
@@ -70,14 +85,26 @@ export class ClienteFormComponent {
 
   enviarCliente(): void {
     this.clienteService.crearCliente(this.cliente).subscribe(
-      (response: Cliente) => { // Especifica el tipo del parámetro response
+      (response: Cliente) => { 
         console.log('Cliente creado:', response);
       },
-      (error: HttpErrorResponse) => { // Especifica el tipo del error
-        console.error('Error al crear el cliente:', error);
-        this.errorGeneral = 'Ocurrió un error al crear el cliente';
+      (error: any) => { 
+        this.errorGeneral = this.processErrorResponse(error);
       }
     );
+  }
+  
+
+  processErrorResponse(error: HttpErrorResponse): string[] {
+    let errorMessages: string[] = [];
+    if (error.error) {
+      for (let key in error.error) {
+        if (error.error[key]) {
+          errorMessages.push(`${key}: ${error.error[key].join(', ')}`);
+        }
+      }
+    }
+    return errorMessages;
   }
 
   reset(): void { 
@@ -87,6 +114,7 @@ export class ClienteFormComponent {
     this.errorsNombre = [];
     this.errorsApellido = [];
     this.errorsTelefono = [];
+    this.errorGeneral = [];  
     this.hasError = true;
   }
  
@@ -94,6 +122,13 @@ export class ClienteFormComponent {
   private isformatoLetras(campo : string, errores: string[], etiqueta: string): void {
     if (!ClienteFormComponent.PATRON_SOLO_LETRAS.test(campo)) {
       errores.push(`El ${etiqueta} solo puede contener letras y espacios.`);
+      this.hasError = true;
+    }
+  }
+
+  private isformatoEmail(campo : string, errores: string[], etiqueta: string): void {
+    if (!ClienteFormComponent.PATRON_EMAIL.test(campo)) {
+      errores.push(`El ${etiqueta} es incorrecto.`);
       this.hasError = true;
     }
   }
@@ -123,5 +158,9 @@ export class ClienteFormComponent {
     } catch (error) {
       errores.push('Hubo un error al validar el teléfono.');
     }
+  }
+
+  private isEmail(campo: string, errores: string[]): void {
+
   }
 }

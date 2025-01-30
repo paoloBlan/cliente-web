@@ -12,6 +12,6 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   crearCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.apiUrl, cliente);
+    return this.http.post<Cliente>(`${this.apiUrl}/agregar`, cliente);
   }
 }
